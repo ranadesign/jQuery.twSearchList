@@ -1,0 +1,51 @@
+@charset "UTF-8";
+/**
+ * Style for jquery.twSearchList.js (default theme)
+ *
+ * @author     RaNa design associates, inc.
+ * @copyright  2010 RaNa design associates, inc.
+ * @Update     2011-04-05 18:47:18
+ */
+
+.twSearchListWrapper {
+	position: relative;
+	font-size: 12px;
+	line-height: 1.5;
+	*zoom: 1;
+}
+.twSearchListWrapper .twSearchListLoadingWrapper {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 50px;
+	margin: -25px 0 0 -25px;
+}
+.twSearchListWrapper .twSearchListInner {
+	width: 100%;
+}
+.twSearchListWrapper .twSearchListInner .tweet {
+}
+.twSearchListWrapper .twSearchListInner .tweet .img {
+	width: 1%;
+	padding: 10px;
+	white-space: no-wrap;
+	border-bottom: 1px solid #ccc;
+}
+.twSearchListWrapper .twSearchListInner .tweet .content {
+	width: 99%;
+	padding: 10px 10px 10px 0;
+	border-bottom: 1px solid #ccc;
+}
+.twSearchListWrapper .twSearchListInner .tweet .content .text {
+	margin: 0;
+}
+.twSearchListWrapper .twSearchListInner .tweet .content .footer {
+	
+}
+.twSearchListWrapper .twSearchListInner .tweet .content .footer .author {
+	margin: 0;
+}
+.twSearchListWrapper .twSearchListInner .tweet .content .footer .date {
+	margin: 0;
+}
+

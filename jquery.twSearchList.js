@@ -1,0 +1,219 @@
+/**
+ * twSearchList jQuery Plugin
+ *
+ * Simple Twitter search list.
+ *
+ * @author     RaNa design associates, inc.
+ * @copyright  2010 RaNa design associates, inc.
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    Release: 1.0
+ * @since      2010-09-16
+ * @update     2010-09-21
+ */
+
+(function($, window, document, undefined) {
+
+// Variable to keep index of instance
+$.twSearchList = { index: 0 };
+
+// jQuery Interface
+$.fn.twSearchList = function(options) {
+	$(this).each(function() {
+		var instanceName = "instance" + $.twSearchList.index;
+		// Make new instance in $.twSearchList array object
+		$.twSearchList[instanceName] = new $.TwSearchList(options);
+		var twObj = $.twSearchList[instanceName].initialize();
+		$(this).html(twObj);
+	});
+	return this;
+};
+
+// TwSearchList Constructor
+$.TwSearchList = function(options) {
+	this.options = {
+		query: "from%3Atoptweets_ja",
+		// Query Example
+		//   %23TagName
+		//   from%3AUserName
+		length: 5,
+		userLink: true,
+		replyLink: true,
+		tagLink: true,
+		dateLink: true,
+		duration: 20000,
+		page: 1,
+		loading: true,
+		loadingImg: "loading.gif",
+		loadingImgId: "twSearchListLoadingImg",
+		loadingWrapperId: "twSearchListLoadingWrapper",
+		wrapperClassName: "twSearchListWrapper",
+		innerClassName: "twSearchListInner",
+		more: false,
+		moreClassName: "more",
+		moreId: "moreTweet",
+		datePosition: "after",
+		dateFormat: function(y, m, d, hs, ms ,ss) {
+			return " (" + y + "-" + m + "-" + d + " " + hs + ":" + ms + ":" + ss + ")";
+		}
+	};
+	$.extend(this.options, options);
+	this.wrapper = {};
+	this.page = 1;
+	this.callbackName = "jQuery.twSearchList.instance" + $.twSearchList.index + ".callback";
+	$.twSearchList.index ++;
+};
+
+$.TwSearchList.prototype = {
+	initialize: function() {
+		var opt = this.options,
+			index = $.twSearchList.index;
+		// Append wrapper element
+		this.wrapper = $('<div/>', {
+				"class": opt.wrapperClassName
+			});
+		// Insert loading image
+		if (opt.loading) { this.createLoadingImg(); }
+		// Insert Twitter JSONP script
+		$('<script/>', {
+				"src": "http://search.twitter.com/search.json?q=" + opt.query + "&rpp=" + opt.length + "&callback=" + this.callbackName
+			}).appendTo("head");
+		return this.wrapper;
+	},
+	callback: function(data) {
+		var self = this,
+			opt = this.options,
+			res = data.results;
+		if (opt.loading) { this.$loadingWrapper.hide(); }
+
+		// Build tweet list container
+		var $twSearchListInner = $('<table/>', {
+				"class":opt.innerClassName,
+				"cellspacing": 0
+				});
+		// Build Tweet List
+		$.each(res, function(i) {
+			var resUser = res[i].from_user,
+				resText = res[i].text,
+				resDate = res[i].created_at;
+			// Build HTML parts
+			var $tr = $('<tr class="tweet"/>'),
+				$imgCell = $('<td class="img"/>'),
+				$imgLink = $('<a/>', {
+					"href": "http://twitter.com/" + res[i].from_user,
+					"target": "_blank"
+				}),
+				$contentCell = $('<td class="content"/>'),
+				$contentInner = $('<div class="contentInner"/>'),
+				$contentInner2 = $('<div class="contentInner2"/>'),
+				$contentFooter = $('<div class="footer"/>'),
+				$contentAuthor = $('<p class="author"/>'),
+				$contentDate = $('<p class="date"/>');
+			// Build user image cell
+			$('<img/>', {
+					"src": res[i].profile_image_url
+				}).appendTo($imgLink);
+			$imgCell.append($imgLink).appendTo($tr);
+
+			// Build content cell
+				// tweet text
+			if (opt.replyLink) { resText = self.createReplyLink(resText); }
+			if (opt.tagLink) { resText = self.createTagLink(resText); }
+			$('<p class="text"/>')
+				.html(resText)
+				.appendTo($contentInner2);
+				// Author
+			if (opt.userLink) { resUser = self.createUserLink(resUser); }
+			$contentAuthor.append(resUser);
+				// Date
+			resDate = self.htmlspecialchars(self.createDateText(resDate));
+			if (opt.dateLink) {
+				resDate = $('<a/>', {
+						"href": "http://twitter.com/" + res[i].from_user + "/status/" + res[i].id,
+						"target": "_blank"
+					}).html(resDate);
+			}
+			$contentDate.append(resDate);
+
+			$contentFooter.append($contentAuthor).append($contentDate);
+			$contentInner2.append($contentFooter).appendTo($contentInner);
+			$contentCell.append($contentInner).appendTo($tr);
+			// Insert row to table
+			$twSearchListInner.append($tr);
+		});
+		// Publish tweet table
+		$(this.wrapper).append($twSearchListInner);
+		// Build and publish "More" link
+		if (opt.more) {
+			this.$moreLinkWrapper = $('<p/>', {
+					"class": opt.moreClassName,
+					"id": opt.moreId
+				});
+			$('<a href="#"/>')
+				.html("もっと読む")
+				.click(function(e) {
+					e.preventDefault();
+					self.requestMoreTweet();
+				})
+				.appendTo(this.$moreLinkWrapper);
+			$(this.wrapper).append(this.$moreLinkWrapper);
+		}
+	},
+	requestMoreTweet: function() {
+		var opt = this.options;
+		// Show loading
+		this.$loadingWrapper.appendTo(this.wrapper).show();
+		// Remove "More" button
+		this.$moreLinkWrapper.remove();
+		// Increment current page
+		this.page ++;
+		$('<script/>', {
+			"src": "http://search.twitter.com/search.json?q=" + opt.query + "&rpp=" + opt.length + "&page=" + this.page + "&callback=" + this.callbackName
+		}).appendTo("head");
+	},
+	createLoadingImg: function() {
+		var opt = this.options;
+		if (opt.loading) {
+			this.$loadingWrapper = $("<div/>", {
+				"id": opt.loadingWrapperId
+			});
+			var $loadingImg = $("<img/>", {
+				"src": opt.loadingImg,
+				"id": opt.loadingImgId
+			}).appendTo(this.$loadingWrapper);
+			$(this.wrapper).append(this.$loadingWrapper);
+		}
+	},
+	createDateText: function(responseDateText) {
+		// ResponseDateText example:
+		// ["Fri,", "17", "Sep", "2010", "06:28:39", "+0000"]
+		var created_at = responseDateText.split(" ");
+		var d = new Date(created_at[2] + " " + created_at[1] + ", " + created_at[3] + ", " + created_at[4]);
+		d.setHours(d.getHours() + 9); // UTC -> JST
+		var dY = d.getFullYear(),
+			dM = (d.getMonth() + 101).toString().slice(1),
+			dD = (d.getDate() + 100).toString().slice(1),
+			dHs = (d.getHours() + 100).toString().slice(1),
+			dMs = (d.getMinutes() + 100).toString().slice(1),
+			dSs = (d.getSeconds() + 100).toString().slice(1);
+		return this.options.dateFormat(dY,dM,dD,dHs,dMs,dSs);
+	},
+	htmlspecialchars: function(s) {
+		s = s.replace(/&/g,"&amp;").replace(/&amp;amp;/g,"&amp;").replace(/"/g,"&quot;").replace(/'/g,"&#039;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+		return s;
+	},
+	createUserLink: function(text) {
+		text = '<a href="http://twitter.com/' + text + '" target="_blank">' + text + '</a>';
+		return text;
+	},
+	createReplyLink: function(text) {
+		text = text.replace(/@([\w_]+)/g, '<a href="http://twitter.com/$1" target="_blank">@$1</a>');
+		return text;
+	},
+	createTagLink: function(text) {
+		text = text.replace(/#([\w_]+)/g, '<a href="http://twitter.com/#search?q=%23$1" target="_blank">#$1</a>');
+		return text;
+	}
+};
+
+})(jQuery, window, document);
+

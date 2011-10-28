@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>jquery.twSearchList.js</title>
+<link rel="stylesheet" href="jquery.twSearchList.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script src="jquery.twSearchList.js"></script>
+<script>
+$(function() {
+$("#twSearchList1").twSearchList({
+	query: "from%3Atoptweets_ja",
+	loadingImg: "resources/loading.gif",
+	more: true,
+	dateLink: 0,
+	dateFormat: function(y, m, d, hs, ms ,ss) {
+		return y + "-" + m + "-" + d + " " + hs + ":" + ms + ":" + ss;
+	}
+});
+});
+</script>
+</head>
+<body>
+
+
+<div id="twSearchList1"></div>
+
+</body>
+</html>
