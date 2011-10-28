@@ -72,14 +72,19 @@ Step01の通りスクリプトファイルを読み込んだ後に、以下の�
 <td>一度に表示するリストの数</td>
 </tr>
 <tr>
-<td>userImg</td>
+<td>showUserImg</td>
 <td>true</td>
 <td>ユーザーのプロフィール画像を表示するか</td>
 </tr>
 <tr>
-<td>userLink</td>
+<td>showUserName</td>
 <td>true</td>
-<td>ユーザー表示にリンクを行うか</td>
+<td>ユーザー名を表示するか</td>
+</tr>
+<tr>
+<td>showDate</td>
+<td>true</td>
+<td>日付表示を行うか</td>
 </tr>
 <tr>
 <td>replyLink</td>
@@ -97,9 +102,14 @@ Step01の通りスクリプトファイルを読み込んだ後に、以下の�
 <td>URLにリンクを行うか</td>
 </tr>
 <tr>
+<td>userLink</td>
+<td>true</td>
+<td>ユーザー名表示にリンクを行うか（showUserName:true の必要有り）</td>
+</tr>
+<tr>
 <td>dateLink</td>
 <td>true</td>
-<td>日付表示にリンクを行うか</td>
+<td>日付表示にリンクを行うか（showDate:true の必要有り）</td>
 </tr>
 <tr>
 <td>loadingImg</td>
