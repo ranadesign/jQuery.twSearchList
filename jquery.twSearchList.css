@@ -4,7 +4,6 @@
  *
  * @author     RaNa design associates, inc.
  * @copyright  2010 RaNa design associates, inc.
- * @Update     2011-04-05 18:47:18
  */
 
 .twSearchListWrapper {
@@ -21,20 +20,40 @@
 	margin: -25px 0 0 -25px;
 }
 .twSearchListWrapper .twSearchListInner {
-	width: 100%;
+	margin: 0;
+	padding: 0;
+	*zoom: 1;
 }
 .twSearchListWrapper .twSearchListInner .tweet {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid #ccc;
+	*zoom: 1;
 }
 .twSearchListWrapper .twSearchListInner .tweet .img {
+	display: table-cell;
 	width: 1%;
+	*display: inline;
+	*float: left;
+	*zoom: 1;
+	*width: auto;
 	padding: 10px;
 	white-space: no-wrap;
-	border-bottom: 1px solid #ccc;
+	vertical-align: top;
+}
+.twSearchListWrapper .twSearchListInner .tweet .img img {
+	border: 0;
 }
 .twSearchListWrapper .twSearchListInner .tweet .content {
+	display: table-cell;
 	width: 99%;
+	*display: inline;
+	*float: left;
+	*zoom: 1;
+	*width: auto;
 	padding: 10px 10px 10px 0;
-	border-bottom: 1px solid #ccc;
+	vertical-align: middle;
 }
 .twSearchListWrapper .twSearchListInner .tweet .content .text {
 	margin: 0;

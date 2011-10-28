@@ -4,11 +4,10 @@
  * Simple Twitter search list.
  *
  * @author     RaNa design associates, inc.
- * @copyright  2010 RaNa design associates, inc.
+ * @copyright  2011 RaNa design associates, inc.
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- * @version    Release: 1.0
+ * @version    Release: 1.1
  * @since      2010-09-16
- * @update     2010-09-21
  */
 
 (function($, window, document, undefined) {
@@ -53,6 +52,7 @@ $.TwSearchList = function(options) {
 		}
 	};
 	$.extend(this.options, options);
+	if (!this.options.query) { return; }
 	this.wrapper = {};
 	this.page = 1;
 	this.callbackName = "jQuery.twSearchList.instance" + $.twSearchList.index + ".callback";
@@ -82,9 +82,8 @@ $.TwSearchList.prototype = {
 		if (opt.loading) { this.$loadingWrapper.hide(); }
 
 		// Build tweet list container
-		var $twSearchListInner = $('<table/>', {
-				"class":opt.innerClassName,
-				"cellspacing": 0
+		var $twSearchListInner = $('<ul/>', {
+				"class":opt.innerClassName
 				});
 		// Build Tweet List
 		$.each(res, function(i) {
@@ -92,13 +91,13 @@ $.TwSearchList.prototype = {
 				resText = res[i].text,
 				resDate = res[i].created_at;
 			// Build HTML parts
-			var $tr = $('<tr class="tweet"/>'),
-				$imgCell = $('<td class="img"/>'),
+			var $row = $('<li class="tweet"/>'),
+				$imgWrapper = $('<div class="img"/>'),
 				$imgLink = $('<a/>', {
 					"href": "http://twitter.com/" + res[i].from_user,
 					"target": "_blank"
 				}),
-				$contentCell = $('<td class="content"/>'),
+				$contentCell = $('<div class="content"/>'),
 				$contentInner = $('<div class="contentInner"/>'),
 				$contentInner2 = $('<div class="contentInner2"/>'),
 				$contentFooter = $('<div class="footer"/>'),
@@ -108,7 +107,7 @@ $.TwSearchList.prototype = {
 			$('<img/>', {
 					"src": res[i].profile_image_url
 				}).appendTo($imgLink);
-			$imgCell.append($imgLink).appendTo($tr);
+			$imgWrapper.append($imgLink).appendTo($row);
 
 			// Build content cell
 				// tweet text
@@ -132,9 +131,9 @@ $.TwSearchList.prototype = {
 
 			$contentFooter.append($contentAuthor).append($contentDate);
 			$contentInner2.append($contentFooter).appendTo($contentInner);
-			$contentCell.append($contentInner).appendTo($tr);
+			$contentCell.append($contentInner).appendTo($row);
 			// Insert row to table
-			$twSearchListInner.append($tr);
+			$twSearchListInner.append($row);
 		});
 		// Publish tweet table
 		$(this.wrapper).append($twSearchListInner);
