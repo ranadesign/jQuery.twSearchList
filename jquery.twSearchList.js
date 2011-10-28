@@ -39,6 +39,7 @@ $.TwSearchList = function(options) {
 		replyLink: true,
 		tagLink: true,
 		dateLink: true,
+		URLLink: true,
 		loading: true,
 		loadingImg: "loading.gif",
 		loadingWrapperId: "twSearchListLoadingWrapper",
@@ -103,14 +104,17 @@ $.TwSearchList.prototype = {
 				$contentFooter = $('<div class="footer"/>'),
 				$contentAuthor = $('<p class="author"/>'),
 				$contentDate = $('<p class="date"/>');
-			// Build user image cell
+			// Build user image section
 			$('<img/>', {
 					"src": res[i].profile_image_url
 				}).appendTo($imgLink);
 			$imgWrapper.append($imgLink).appendTo($row);
 
-			// Build content cell
+			// Build content section
 				// tweet text
+					// with text replacement
+					// - This execution sequence has a point.
+			if (opt.URLLink) { resText = self.createURLLink(resText); }
 			if (opt.replyLink) { resText = self.createReplyLink(resText); }
 			if (opt.tagLink) { resText = self.createTagLink(resText); }
 			$('<p class="text"/>')
@@ -204,6 +208,10 @@ $.TwSearchList.prototype = {
 	},
 	createTagLink: function(text) {
 		text = text.replace(/#([\w_]+)/g, '<a href="http://twitter.com/#search?q=%23$1" target="_blank">#$1</a>');
+		return text;
+	},
+	createURLLink: function(text) {
+		text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
 		return text;
 	}
 };
