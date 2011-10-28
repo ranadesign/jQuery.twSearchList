@@ -128,7 +128,7 @@ $.TwSearchList.prototype = {
 			resDate = self.htmlspecialchars(self.createDateText(resDate));
 			if (opt.dateLink) {
 				resDate = $('<a/>', {
-						"href": "http://twitter.com/" + res[i].from_user + "/status/" + res[i].id,
+						"href": "http://twitter.com/" + res[i].from_user + "/status/" + res[i].id_str,
 						"target": "_blank"
 					}).html(resDate);
 			}
