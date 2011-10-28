@@ -35,7 +35,7 @@ $.TwSearchList = function(options) {
 		//   %23TagName
 		//   from%3AUserName
 		length: 5,
-		userImg: true,
+		showUserImg: true,
 		userLink: true,
 		replyLink: true,
 		tagLink: true,
