@@ -31,7 +31,7 @@ $.fn.twSearchList = function(options) {
 // TwSearchList Constructor
 $.TwSearchList = function(options) {
 	this.options = {
-		query: "from%3Atoptweets_ja",
+//        query: "from%3Atoptweets_ja",
 		// Query Example
 		//   %23TagName
 		//   from%3AUserName
@@ -40,18 +40,14 @@ $.TwSearchList = function(options) {
 		replyLink: true,
 		tagLink: true,
 		dateLink: true,
-		duration: 20000,
-		page: 1,
 		loading: true,
 		loadingImg: "loading.gif",
-		loadingImgId: "twSearchListLoadingImg",
 		loadingWrapperId: "twSearchListLoadingWrapper",
 		wrapperClassName: "twSearchListWrapper",
 		innerClassName: "twSearchListInner",
 		more: false,
+		moreText: "もっと読む",
 		moreClassName: "more",
-		moreId: "moreTweet",
-		datePosition: "after",
 		dateFormat: function(y, m, d, hs, ms ,ss) {
 			return " (" + y + "-" + m + "-" + d + " " + hs + ":" + ms + ":" + ss + ")";
 		}
@@ -144,12 +140,11 @@ $.TwSearchList.prototype = {
 		$(this.wrapper).append($twSearchListInner);
 		// Build and publish "More" link
 		if (opt.more) {
-			this.$moreLinkWrapper = $('<p/>', {
-					"class": opt.moreClassName,
-					"id": opt.moreId
+			this.$moreLinkWrapper = $('<div/>', {
+					"class": opt.moreClassName
 				});
 			$('<a href="#"/>')
-				.html("もっと読む")
+				.html(opt.moreText)
 				.click(function(e) {
 					e.preventDefault();
 					self.requestMoreTweet();
@@ -177,8 +172,7 @@ $.TwSearchList.prototype = {
 				"id": opt.loadingWrapperId
 			});
 			var $loadingImg = $("<img/>", {
-				"src": opt.loadingImg,
-				"id": opt.loadingImgId
+				"src": opt.loadingImg
 			}).appendTo(this.$loadingWrapper);
 			$(this.wrapper).append(this.$loadingWrapper);
 		}
