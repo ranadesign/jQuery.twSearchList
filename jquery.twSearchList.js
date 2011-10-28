@@ -36,6 +36,8 @@ $.TwSearchList = function(options) {
 		//   from%3AUserName
 		length: 5,
 		showUserImg: true,
+		showUserName: true,
+		showDate: true,
 		userLink: true,
 		replyLink: true,
 		tagLink: true,
@@ -106,7 +108,7 @@ $.TwSearchList.prototype = {
 				$contentAuthor = $('<p class="author"/>'),
 				$contentDate = $('<p class="date"/>');
 			// Build user image section
-			if (opt.userImg) {
+			if (opt.showUserImg) {
 				$('<img/>', {
 						"src": res[i].profile_image_url
 					}).appendTo($imgLink);
@@ -124,19 +126,24 @@ $.TwSearchList.prototype = {
 				.html(resText)
 				.appendTo($contentInner2);
 				// Author
-			if (opt.userLink) { resUser = self.createUserLink(resUser); }
-			$contentAuthor.append(resUser);
-				// Date
-			resDate = self.htmlspecialchars(self.createDateText(resDate));
-			if (opt.dateLink) {
-				resDate = $('<a/>', {
-						"href": "http://twitter.com/" + res[i].from_user + "/status/" + res[i].id_str,
-						"target": "_blank"
-					}).html(resDate);
+			if (opt.showUserName) {
+				if (opt.userLink) { resUser = self.createUserLink(resUser); }
+				$contentAuthor.append(resUser);
+				$contentFooter.append($contentAuthor);
 			}
-			$contentDate.append(resDate);
+				// Date
+			if (opt.showDate) {
+				resDate = self.htmlspecialchars(self.createDateText(resDate));
+				if (opt.dateLink) {
+					resDate = $('<a/>', {
+							"href": "http://twitter.com/" + res[i].from_user + "/status/" + res[i].id_str,
+							"target": "_blank"
+						}).html(resDate);
+				}
+				$contentDate.append(resDate);
+				$contentFooter.append($contentDate);
+			}
 
-			$contentFooter.append($contentAuthor).append($contentDate);
 			$contentInner2.append($contentFooter).appendTo($contentInner);
 			$contentCell.append($contentInner).appendTo($row);
 			// Insert row to table
