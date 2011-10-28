@@ -35,6 +35,7 @@ $.TwSearchList = function(options) {
 		//   %23TagName
 		//   from%3AUserName
 		length: 5,
+		userImg: true,
 		userLink: true,
 		replyLink: true,
 		tagLink: true,
@@ -105,10 +106,12 @@ $.TwSearchList.prototype = {
 				$contentAuthor = $('<p class="author"/>'),
 				$contentDate = $('<p class="date"/>');
 			// Build user image section
-			$('<img/>', {
-					"src": res[i].profile_image_url
-				}).appendTo($imgLink);
-			$imgWrapper.append($imgLink).appendTo($row);
+			if (opt.userImg) {
+				$('<img/>', {
+						"src": res[i].profile_image_url
+					}).appendTo($imgLink);
+				$imgWrapper.append($imgLink).appendTo($row);
+			}
 
 			// Build content section
 				// tweet text

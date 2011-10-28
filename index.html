@@ -11,8 +11,27 @@ $(function() {
 $("#twSearchList1").twSearchList({
 	query: "from%3Atoptweets_ja",
 	loadingImg: "resources/loading.gif",
+	length: 3,
 	more: true,
 	dateLink: 1,
+	dateFormat: function(y, m, d, hs, ms ,ss) {
+		return y + "-" + m + "-" + d + " " + hs + ":" + ms + ":" + ss;
+	}
+});
+
+
+$("#twSearchList2").twSearchList({
+	query: "%40masason",
+	loadingImg: "resources/loading.gif",
+	length: 3,
+	more: true,
+	userImg: 0,
+	userLink: 0,
+	replyLink: 0,
+	tagLink: 0,
+	dateLink: 0,
+	URLLink: 0,
+	moreText: 'Read More',
 	dateFormat: function(y, m, d, hs, ms ,ss) {
 		return y + "-" + m + "-" + d + " " + hs + ":" + ms + ":" + ss;
 	}
@@ -22,8 +41,12 @@ $("#twSearchList1").twSearchList({
 </head>
 <body>
 
-
+<h2>from:toptweets_ja with all options</h2>
 <div id="twSearchList1"></div>
+<hr />
+
+<h2>@masason with no user image, no links</h2>
+<div id="twSearchList2"></div>
 
 </body>
 </html>
