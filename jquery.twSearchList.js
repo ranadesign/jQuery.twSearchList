@@ -95,7 +95,7 @@ $.TwSearchList.prototype = {
 				resText = res[i].text,
 				resDate = res[i].created_at;
 			// Build HTML parts
-			var $row = $('<li class="tweet"/>'),
+			var $row = $('<li class="tweet tweet' + i + '"/>'),
 				$imgWrapper = $('<div class="img"/>'),
 				$imgLink = $('<a/>', {
 					"href": "http://twitter.com/" + res[i].from_user,
