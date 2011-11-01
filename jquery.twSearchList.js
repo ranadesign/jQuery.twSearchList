@@ -221,7 +221,7 @@ $.TwSearchList.prototype = {
 		return text;
 	},
 	createURLLink: function(text) {
-		text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+		text = text.replace(/(https?:\/\/[^\s　]+)/g, '<a href="$1" target="_blank">$1</a>');
 		return text;
 	}
 };
