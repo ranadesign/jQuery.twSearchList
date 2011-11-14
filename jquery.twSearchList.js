@@ -6,7 +6,7 @@
  * @author     RaNa design associates, inc.
  * @copyright  2011 RaNa design associates, inc.
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- * @version    Release: 1.1
+ * @version    Release: 1.2
  * @since      2010-09-16
  * @link       https://github.com/ranadesign/jQuery.twSearchList
  */
