@@ -8,6 +8,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  * @version    Release: 1.1
  * @since      2010-09-16
+ * @link       https://github.com/ranadesign/jQuery.twSearchList
  */
 
 (function($, window, document, undefined) {
