@@ -70,4 +70,10 @@
 .twSearchListWrapper .more {
 	margin: 1em 15px;
 }
+.twSearchListWrapper .twSearchListInner .noResult {
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid #ccc;
+	*zoom: 1;
+}
 

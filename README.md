@@ -151,6 +151,11 @@ Step01の通りスクリプトファイルを読み込んだ後に、以下の�
 <td>function(y, m, d, hs, ms ,ss) { return " (" + y + "-" + m + "-" + d + " " + hs + ":" + ms + ":" + ss + ")"; }</td>
 <td>日付表示のフォーマットを返す関数。引数に 年/月/日/時/分/秒 を順番に6つ受け取るのでそれを使って適当な文字列を返すようにします。</td>
 </tr>
+<tr>
+<td>noResultContent</td>
+<td>'&lt;div class="noResult"&gt;No search result.&lt;/div&gt;'</td>
+<td>APIによるレスポンスが0件だったときに表示するコンテンツ。innerHTML方式の文字列で記述する。</td>
+</tr>
 </tbody>
 </table>
 

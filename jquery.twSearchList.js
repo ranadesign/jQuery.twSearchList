@@ -54,7 +54,8 @@ $.TwSearchList = function(options) {
 		moreClassName: "more",
 		dateFormat: function(y, m, d, hs, ms ,ss) {
 			return " (" + y + "-" + m + "-" + d + " " + hs + ":" + ms + ":" + ss + ")";
-		}
+		},
+		noResultContent: '<div class="noResult">No search result.</div>'
 	};
 	$.extend(this.options, options);
 	if (!this.options.query) { return; }
@@ -150,8 +151,13 @@ $.TwSearchList.prototype = {
 			// Insert row to table
 			$twSearchListInner.append($row);
 		});
-		// Publish tweet table
-		$(this.wrapper).append($twSearchListInner);
+		if (res.length) {
+			// Publish tweet table
+			$(this.wrapper).append($twSearchListInner);
+		} else {
+			// No results
+			$(this.wrapper).append(opt.noResultContent);
+		}
 		// Build and publish "More" link
 		if (opt.more) {
 			this.$moreLinkWrapper = $('<div/>', {
