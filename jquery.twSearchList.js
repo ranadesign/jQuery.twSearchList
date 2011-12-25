@@ -52,6 +52,9 @@ $.TwSearchList = function(options) {
 		more: false,
 		moreText: "もっと読む",
 		moreClassName: "more",
+		complete: function () {
+			// callback
+		},
 		dateFormat: function(y, m, d, hs, ms ,ss) {
 			return " (" + y + "-" + m + "-" + d + " " + hs + ":" + ms + ":" + ss + ")";
 		},
@@ -172,6 +175,7 @@ $.TwSearchList.prototype = {
 				.appendTo(this.$moreLinkWrapper);
 			$(this.wrapper).append(this.$moreLinkWrapper);
 		}
+		opt.complete();
 	},
 	requestMoreTweet: function() {
 		var opt = this.options;

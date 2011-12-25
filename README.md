@@ -156,6 +156,11 @@ Step01の通りスクリプトファイルを読み込んだ後に、以下の�
 <td>'&lt;div class="noResult"&gt;No search result.&lt;/div&gt;'</td>
 <td>APIによるレスポンスが0件だったときに表示するコンテンツ。innerHTML方式の文字列で記述する。</td>
 </tr>
+<tr>
+<td>complete</td>
+<td>function () {}</td>
+<td>出力が全て完了した後に実行されるコールバック関数</td>
+</tr>
 </tbody>
 </table>
 
